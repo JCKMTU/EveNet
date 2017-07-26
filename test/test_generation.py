@@ -71,7 +71,7 @@ class TestGeneration(tf.test.TestCase):
                                           colored(str(prediction), 'grey')))
 
 
-                yahoo!
+                ahahahah
 
 if __name__ == '__main__':
     tf.test.main()

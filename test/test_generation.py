@@ -20,7 +20,8 @@ class TestGeneration(tf.test.TestCase):
         self.assertTrue(True)
         self.checkpoint = "../save/model.ckpt-804"
 
-        saver = tf.train.import_meta_graph(self.checkpoint + '.meta', clear_devices=False)
+        saver = tf.train.import_meta_graph(self.checkpoint + '.meta',
+                                           clear_devices=False)
         saver.restore(sess, args.checkpoint)
 
         config = {}
@@ -35,7 +36,7 @@ class TestGeneration(tf.test.TestCase):
         if args.dat_seed:
             raise NotImplementedError("No seed function yet...")
         else:
-            data_feed = np.zeros([config['receptive_field_size'],config['data_dim']], dtype=np.float32)
+            data_feed = np.zeros([config['receptive_field_size'], config['data_dim']], dtype=np.float32)
             gc_feed = np.zeros(config['receptive_field_size'], dtype=np.int32)
             lc_feed = np.zeros(config['receptive_field_size'], dtype=np.int32)
 
@@ -66,9 +67,10 @@ class TestGeneration(tf.test.TestCase):
                 gc_feed = np.append(gc_feed, "Angry")
                 lc_feed = np.append(lc_feed, "Eh")
                 print("%5i %s %s \n %s" % (step,
-                                          colored(CURRENT_EMOTION, 'blue'),
-                                          colored(CURRENT_PHONEME, 'white', 'on_grey', attrs=['bold']),
-                                          colored(str(prediction), 'grey')))
+                                           colored(CURRENT_EMOTION, 'blue'),
+                                           colored(CURRENT_PHONEME, 'white',
+                                           'on_grey', attrs=['bold']),
+                                           colored(str(prediction), 'grey')))
 
 
 if __name__ == '__main__':

@@ -20,7 +20,7 @@ class TestGeneration(tf.test.TestCase):
         self.assertTrue(True)
         self.checkpoint = "../save/model.ckpt-804"
 
-        saver = tf.train.import_meta_graph( + '.meta', clear_devices=False)
+        saver = tf.train.import_meta_graph(self.checkpoint + '.meta', clear_devices=False)
         saver.restore(sess, args.checkpoint)
 
         config = {}

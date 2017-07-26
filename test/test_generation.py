@@ -62,7 +62,7 @@ class TestGeneration(tf.test.TestCase):
                     outputs = [next_sample]
                 prediction = sess.run(ouputs, feed_dict={'samples:0': window_})
                 data_feed = np.append(data_feedm prediction, axis=0)
-                
+
                 gc_feed = np.append(gc_feed, "Angry")
                 lc_feed = np.append(lc_feed, "Eh")
                 print("%5i %s %s \n %s" % (step,
@@ -70,6 +70,8 @@ class TestGeneration(tf.test.TestCase):
                                           colored(CURRENT_PHONEME, 'white', 'on_grey', attrs=['bold']),
                                           colored(str(prediction), 'grey')))
 
+
+                yahoo!
 
 if __name__ == '__main__':
     tf.test.main()

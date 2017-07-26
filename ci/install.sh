@@ -8,4 +8,6 @@ conda update -q conda
 
 conda create -q -n test python=$TRAVIS_PYTHON_VERSION numpy scipy
 source activate test
-pip install -r requirements_test.txt
+pip install --upgrade pip
+pip install pep8 nose tensorflow termcolor pandas
+python setup.py install

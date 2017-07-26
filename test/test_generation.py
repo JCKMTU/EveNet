@@ -18,7 +18,7 @@ class TestGeneration(tf.test.TestCase):
         '''does nothing'''
         self.assertAllEqual([128], [128])
         self.assertTrue(True)
-        self.checkpoint = "../save/"
+        self.checkpoint = "../save/model.ckpt-804"
 
         saver = tf.train.import_meta_graph( + '.meta', clear_devices=False)
         saver.restore(sess, args.checkpoint)
@@ -70,8 +70,6 @@ class TestGeneration(tf.test.TestCase):
                                           colored(CURRENT_PHONEME, 'white', 'on_grey', attrs=['bold']),
                                           colored(str(prediction), 'grey')))
 
-
-                ahahahah
 
 if __name__ == '__main__':
     tf.test.main()

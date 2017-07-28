@@ -27,6 +27,7 @@ import json
 import os
 import threading
 import sys
+from termcolor import colored
 
 from wavenet import WaveNetModel, CsvReader, optimizer_factory
 
@@ -214,6 +215,7 @@ def run(target,
 
             reader = CsvReader(
                 train_files,
+                batch_size=batch_size,
                 receptive_field=receptive_field_size,
                 sample_size=sample_size,
                 config=reader_config
@@ -287,7 +289,7 @@ def run(target,
                                                is_chief=is_chief,
                                                checkpoint_dir=job_dir,
                                                hooks=hooks,
-                                               save_checkpoint_secs=20,
+                                               save_checkpoint_secs=120,
                                                save_summaries_steps=0) as session:  # TODO: SUMMARIES HERE
 
             # Global step to keep track of global number of steps particularly in
@@ -299,9 +301,23 @@ def run(target,
             try:
                 while (train_steps is None or
                        step < train_steps) and not session.should_stop():
-                    print("step %d" % step, end=' \r ')
+                    print("step %d" % step, end='\r')
                     sys.stdout.flush()
                     step, _ = session.run([global_step_tensor, train_op])
+
+                    """ # For debugging
+                    dat, gc, lc = session.run([reader.data_batch, reader.gc_batch, reader.lc_batch])
+                    print(colored(str(dat.shape), 'red', 'on_grey'))
+                    for field in dat:
+                        print(colored(str(field), 'red'))
+                    print(colored(str(lc.shape), 'red', 'on_grey'))
+                    for field in lc:
+                        print(colored(str(field), 'blue'))
+                    print(colored(str(gc.shape), 'red', 'on_grey'))
+                    for field in gc:
+                        print(colored(str(field), 'green'))
+                    """
+
             except KeyboardInterrupt:
                 pass
 
@@ -369,7 +385,7 @@ if __name__ == "__main__":
     parser.add_argument('--batch-size',
                         type=int,
                         default=1,
-                        help='Batch size for training steps')
+                        help='Batch size for training steps, recommended 1')
 
     parser.add_argument('--learning-rate',
                         type=float,
@@ -404,8 +420,8 @@ if __name__ == "__main__":
                         help='Part of Wavenet Params')
     parser.add_argument('--dilations',
                         type=list,
-                        default=[1, 2, 4, 8, 16, 32, 64,
-                                 1, 2, 4, 8, 16, 32, 64],
+                        default=[1, 2, 4, 8, 16, 32, 64, 128,
+                                 1, 2, 4, 8, 16, 32, 64, 128],
                         help='Part of Wavenet Params')
     parser.add_argument('--residual_channels',
                         type=int,

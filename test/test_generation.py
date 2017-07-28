@@ -36,7 +36,8 @@ class TestGeneration(tf.test.TestCase):
         if args.dat_seed:
             raise NotImplementedError("No seed function yet...")
         else:
-            data_feed = np.zeros([config['receptive_field_size'], config['data_dim']], dtype=np.float32)
+            data_feed = np.zeros([config['receptive_field_size'],
+                                  config['data_dim']], dtype=np.float32)
             gc_feed = np.zeros(config['receptive_field_size'], dtype=np.int32)
             lc_feed = np.zeros(config['receptive_field_size'], dtype=np.int32)
 
@@ -52,9 +53,9 @@ class TestGeneration(tf.test.TestCase):
                     # See Alex repository for feeding in initial samples...
                 else:
                     if len(data_feed) > config['receptive_field_size']:
-                        window_data = data_feed[-config['receptive_field_size']:]
-                        window_gc = gc_feed[-config['receptive_field_size']:]
-                        window_lc = lc_feed[-config['receptive_field_size']:]
+                       window_data = data_feed[-config['receptive_field_size']:]
+                       window_gc = gc_feed[-config['receptive_field_size']:]
+                       window_lc = lc_feed[-config['receptive_field_size']:]
                     else:
                         window_data = data_feed[:]
                         window_gc = gc_feed[:]
